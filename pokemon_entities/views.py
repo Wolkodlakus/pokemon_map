@@ -80,6 +80,9 @@ def show_pokemon(request, pokemon_id):
     description_of_pokemon = {
         "pokemon_id": pokemon.id,
         "title_ru": pokemon.title,
+        "title_en": pokemon.title_en,
+        "title_jp": pokemon.title_jp,
+        "description": pokemon.description,
         "img_url": (request.build_absolute_uri(pokemon.image.url)
                     if pokemon.image
                     else None)
