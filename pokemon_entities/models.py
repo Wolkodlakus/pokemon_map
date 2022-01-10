@@ -22,4 +22,4 @@ class PokemonEntity(models.Model):
     stamina = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.pokemon.title}'
+        return f'{self.id}-{self.pokemon.title}'
