@@ -1,5 +1,4 @@
 import folium
-import json
 
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
@@ -85,8 +84,31 @@ def show_pokemon(request, pokemon_id):
         "description": pokemon.description,
         "img_url": (request.build_absolute_uri(pokemon.image.url)
                     if pokemon.image
-                    else None)
+                    else None),
     }
+    if pokemon.evolved_from:
+        prev_pokemon = pokemon.evolved_from
+        description_of_pokemon["previous_evolution"] = {
+            "pokemon_id": prev_pokemon.id,
+            "title_ru": prev_pokemon.title,
+            "img_url": (request.build_absolute_uri(prev_pokemon.image.url)
+                        if prev_pokemon.image
+                        else None),
+        }
+    else:
+        description_of_pokemon["previous_evolution"] = None
+    """if pokemon.evolves_into:
+        next_pokemon = pokemon.evolves_into
+        description_of_pokemon["next_evolution"] = {
+            "pokemon_id": next_pokemon.id,
+            "title_ru": next_pokemon.title,
+            "img_url": (request.build_absolute_uri(next_pokemon.image.url)
+                        if next_pokemon.image
+                        else None),
+        }
+    else:
+        description_of_pokemon["next_evolution"] = None"""
+
     return render(request, 'pokemon.html', context={
         'map': folium_map._repr_html_(), 'pokemon': description_of_pokemon
     })
