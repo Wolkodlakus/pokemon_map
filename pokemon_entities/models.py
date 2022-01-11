@@ -2,6 +2,7 @@ from django.db import models  # noqa F401
 
 
 class Pokemon(models.Model):
+    """Покемон"""
     title = models.CharField(verbose_name='Название по русски', max_length=200)
     title_en = models.CharField(verbose_name='Название по английски',max_length=200, default='', blank=True, null=True)
     title_jp = models.CharField(verbose_name='Название по японски',max_length=200, default='', blank=True, null=True)
@@ -14,8 +15,13 @@ class Pokemon(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    class Meta:
+        verbose_name = 'Покемона'
+        verbose_name_plural = 'Покемоны'
+
 
 class PokemonEntity(models.Model):
+    """Расположение покемона"""
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
     lat = models.FloatField(verbose_name='Широта')
     lon = models.FloatField(verbose_name='Долгота')
@@ -29,3 +35,7 @@ class PokemonEntity(models.Model):
 
     def __str__(self):
         return f'{self.id}-{self.pokemon.title}'
+
+    class Meta:
+        verbose_name = 'Местоположение покемона'
+        verbose_name_plural = 'Местоположения покемонов'
