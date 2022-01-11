@@ -97,8 +97,10 @@ def show_pokemon(request, pokemon_id):
         }
     else:
         description_of_pokemon["previous_evolution"] = None
-    """if pokemon.evolves_into:
-        next_pokemon = pokemon.evolves_into
+
+    next_pokemons = pokemon.evolves_into.all()
+    if next_pokemons:
+        next_pokemon = next_pokemons[0]
         description_of_pokemon["next_evolution"] = {
             "pokemon_id": next_pokemon.id,
             "title_ru": next_pokemon.title,
@@ -107,7 +109,7 @@ def show_pokemon(request, pokemon_id):
                         else None),
         }
     else:
-        description_of_pokemon["next_evolution"] = None"""
+        description_of_pokemon["next_evolution"] = None
 
     return render(request, 'pokemon.html', context={
         'map': folium_map._repr_html_(), 'pokemon': description_of_pokemon
