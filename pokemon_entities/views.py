@@ -65,7 +65,7 @@ def show_pokemon(request, pokemon_id):
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
 
-    pokemon_entities = PokemonEntity.objects.filter(pokemon=pokemon)
+    pokemon_entities = pokemon.pokemon_entities.all()
 
     for pokemon_entity in pokemon_entities:
         add_pokemon(
@@ -98,9 +98,8 @@ def show_pokemon(request, pokemon_id):
     else:
         pokemon_description['previous_evolution'] = None
 
-    next_pokemons = pokemon.evolves_into.all()
-    if next_pokemons:
-        next_pokemon = next_pokemons[0]
+    next_pokemon = pokemon.evolves_into.first()
+    if next_pokemon:
         pokemon_description['next_evolution'] = {
             'pokemon_id': next_pokemon.id,
             'title_ru': next_pokemon.title,
