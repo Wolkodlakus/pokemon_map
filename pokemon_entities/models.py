@@ -2,7 +2,8 @@ from django.db import models  # noqa F401
 
 
 class Pokemon(models.Model):
-    title = models.CharField(verbose_name='Название по русски', max_length=200)
+    title = models.CharField(verbose_name='Название по русски',
+                             max_length=200)
     title_en = models.CharField(verbose_name='Название по английски',
                                 max_length=200, blank=True)
     title_jp = models.CharField(verbose_name='Название по японски',
@@ -28,6 +29,7 @@ class Pokemon(models.Model):
 
 class PokemonEntity(models.Model):
     pokemon = models.ForeignKey(Pokemon,
+                                verbose_name='Размещаемый покемон',
                                 on_delete=models.CASCADE,
                                 related_name='pokemon_entities')
     lat = models.FloatField(verbose_name='Широта')
